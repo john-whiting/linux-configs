@@ -1,8 +1,16 @@
-local linecount=$(($(wc -l < $HISTFILE) + 1))
+function prompt_precmd() {
+  if [ $? -eq 0 ];  then
+	exec_color="%F{077}"
+  else
+    exec_color="%F{160}"
+  fi
+}
 
-PROMPT='%F{122}$(history_count) %f%F{099}[%c] %F{229}→ %f'
+add-zsh-hook precmd prompt_precmd
 
-RPROMPT='%f$(git_prompt_status)%f%F{099}$(git_prompt_info)%f'
+PROMPT='%F{075}$(history_count) %f%F{098}[%c] %f$(echo $exec_color)$(last_exec_time)%f%F{229}→ %f'
+
+RPROMPT='%f$(git_prompt_status)%f%F{098}$(git_prompt_info)%f'
 
 ZSH_THEME_GIT_PROMPT_PREFIX=""
 ZSH_THEME_GIT_PROMPT_SUFFIX=""
@@ -14,3 +22,4 @@ ZSH_THEME_GIT_PROMPT_DELETED="%F{160}✗"
 ZSH_THEME_GIT_PROMPT_RENAMED="$F{039}➦"
 ZSH_THEME_GIT_PROMPT_UNMERGED="%F{099}✂"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{246}✱"
+

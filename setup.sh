@@ -19,7 +19,7 @@ bind_config() {
 	mkdir -p $TO_DIR
 
 	rm $FROM_PATH.old &> /dev/null
-	mv $FROM_PATH $FROM_PATH.old
+	mv $FROM_PATH $FROM_PATH.old &> /dev/null
 	ln -s $TO_PATH $FROM_PATH
 }
 
@@ -38,6 +38,7 @@ install_packages() {
 	# - Neovim
 	# - Ripgrep
 	# - Vim-Plug
+	# - Z-Plug
 	##
 	echo "Installing Packages"
 
@@ -47,6 +48,9 @@ install_packages() {
 
 	# Install Vim-Plug
 	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' &> /dev/null
+	
+	# Install Z-Plug
+	curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
 
 	echo "Finished Installing Packages"
 }
@@ -64,6 +68,10 @@ bind_configs() {
 	echo "Finished Binding Configs"
 }
 
+install_plugins() {
+	# Install NeoVim Plugins
+    nv --headless +'PlugInstall' +qa
+}
 
 
 ##
@@ -75,6 +83,7 @@ main() {
 
 	install_packages
 	bind_configs
+	install_plugins
 
 	echo "Finished Installing JWHITING's Terminal Setup"
 }
