@@ -44,7 +44,7 @@ install_packages() {
 
 	sudo add-apt-repository -y ppa:neovim-ppa/stable
 	sudo apt update -y
-	sudo apt install -y zsh neovim-runtime neovim ripgrep
+	sudo apt install -y zsh neovim-runtime neovim ripgrep fzy
 
 	# Install Vim-Plug
 	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' &> /dev/null
@@ -70,7 +70,7 @@ bind_configs() {
 
 install_plugins() {
 	# Install NeoVim Plugins
-    nv --headless +'PlugInstall' +qa
+    nvim --headless +'PlugInstall' +qa
 }
 
 
