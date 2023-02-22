@@ -16,7 +16,7 @@ bind_config() {
 
 	TO_DIR=$(dirname $TO_PATH)
 
-	mkdir -p $TO_DIR
+	mkdir $TO_DIR -p
 
 	rm $FROM_PATH.old &> /dev/null
 	mv $FROM_PATH $FROM_PATH.old &> /dev/null

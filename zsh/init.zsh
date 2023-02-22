@@ -13,7 +13,7 @@ source ${JWHITING_ZSH_DIR}/theme.zsh
 source ${JWHITING_ZSH_DIR}/aliases/init.zsh
 
 if [ -d "${JWHITING_LOCAL_DIR}/zsh" ]; then
-	for f in "$(find ${JWHITING_LOCAL_DIR}/zsh -name '*.zsh' -print -quit)"; do
+	for f in ${JWHITING_LOCAL_DIR}/zsh/*.zsh; do
   		. $f
 	done
 fi
