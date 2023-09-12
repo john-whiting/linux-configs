@@ -29,6 +29,27 @@ bind_config() {
 # Primary Logic
 ##
 
+install_nvim() {
+	# Remove the configurations/state files
+	rm ~/.config/nvim -r
+	rm ~/.local/share/nvim
+	rm ~/.local/state/nvim
+
+	# Remove the installation
+	rm ~/.nvim -r
+
+	# Install neovim
+	mkdir -p ~/.nvim
+
+	wget -qO- https://github.com/neovim/neovim/releases/download/v0.9.2/nvim-linux64.tar.gz | tar xvz -C ~/.nvim
+
+	mv ~/.nvim/nvim-linux64/* ~/.nvim
+	rm ~/.nvim/nvim-linux64 -r
+
+	# Bind nvim config
+	ln -s $SCRIPT_PATH/nvim ~/.config/nvim
+}
+
 install_packages() {
 	##
 	# Ensure Repositories are up to date
@@ -37,20 +58,13 @@ install_packages() {
 	# - ZSH
 	# - Neovim
 	# - Ripgrep
-	# - Vim-Plug
-	# - Z-Plug
 	##
 	echo "Installing Packages"
 
-	sudo add-apt-repository -y ppa:neovim-ppa/stable
 	sudo apt update -y
-	sudo apt install -y zsh neovim-runtime neovim ripgrep fzy
+	sudo apt install -y zsh ripgrep fzy
 
-	# Install Vim-Plug
-	sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' &> /dev/null
-	
-	# Install Z-Plug
-	curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
+	install_nvim
 
 	echo "Finished Installing Packages"
 }
@@ -63,14 +77,13 @@ bind_configs() {
 
 	# ZSH Config
 	bind_config ~/.zshrc zsh/init.zsh
-	bind_config ~/.config/nvim/init.vim nvim/init.vim
 
 	echo "Finished Binding Configs"
 }
 
 install_plugins() {
-	# Install NeoVim Plugins
-    nvim --headless +'PlugInstall' +qa
+    # Install NeoVim Plugins
+    ~/.nvim/bin/nvim --headless "+Lazy! sync" +qa
 }
 
 
