@@ -13,12 +13,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- Lazy.nvim initialization
-plugins = {
+local plugins = {
   {
-    'nvim-telescope/telescope.nvim', tag = '0.1.2',
+    'nvim-telescope/telescope.nvim',
+    tag = '0.1.2',
     dependencies = { 'nvim-lua/plenary.nvim' }
   },
-  { 'rose-pine/neovim', name = 'rose-pine', config = function() vim.cmd('colorscheme rose-pine') end }, 
+  { 'rose-pine/neovim',    name = 'rose-pine', config = function() vim.cmd('colorscheme rose-pine') end },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -48,19 +49,20 @@ plugins = {
   { 'mbbill/undotree' },
   { 'tpope/vim-fugitive' },
   {
-  'VonHeikemen/lsp-zero.nvim',
-  branch = 'v2.x',
-  dependencies = {
-    -- LSP Support
-    {'neovim/nvim-lspconfig'},             -- Required
-    {'williamboman/mason.nvim'},           -- Optional
-    {'williamboman/mason-lspconfig.nvim'}, -- Optional
+    'VonHeikemen/lsp-zero.nvim',
+    branch = 'v2.x',
+    dependencies = {
+      -- LSP Support
+      { 'neovim/nvim-lspconfig' },             -- Required
+      { 'williamboman/mason.nvim' },           -- Optional
+      { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
-    -- Autocompletion
-    {'hrsh7th/nvim-cmp'},     -- Required
-    {'hrsh7th/cmp-nvim-lsp'}, -- Required
-    {'L3MON4D3/LuaSnip'},     -- Required
-  }
-}
+      -- Autocompletion
+      { 'hrsh7th/nvim-cmp' },     -- Required
+      { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+      { 'L3MON4D3/LuaSnip' },     -- Required
+    }
+  },
+  { 'esensar/nvim-dev-container' },
 }
 require("lazy").setup(plugins)

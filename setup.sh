@@ -1,17 +1,14 @@
 #!/bin/bash
 
-
-
 ##
 # Helper Functions
 ##
 
-SCRIPT=$(realpath "$0")
-SCRIPT_PATH=$(dirname "$SCRIPT")
+INSTALL_PATH=${INSTALL_PATH:~/.jwhiting}
 
 bind_config() {
 	FROM_PATH=$1
-	TO_PATH=$SCRIPT_PATH/$2
+	TO_PATH=$INSTALL_PATH/$2
 	echo "Binding config for $FROM_PATH to $TO_PATH"
 
 	TO_DIR=$(dirname $TO_PATH)
@@ -23,11 +20,19 @@ bind_config() {
 	ln -s $TO_PATH $FROM_PATH
 }
 
-
-
 ##
 # Primary Logic
 ##
+
+pull_github() {
+  git clone git@github.com:john-whiting/linux-configs.git $INSTALL_PATH
+
+  if [ $RESULT -ne 0 ]; then
+    git clone https://github.com/john-whiting/linux-configs.git $INSTALL_PATH
+  fi
+
+  cd $INSTALL_PATH
+}
 
 install_nvim() {
 	# Remove the configurations/state files
@@ -47,7 +52,7 @@ install_nvim() {
 	rm ~/.nvim/nvim-linux64 -r
 
 	# Bind nvim config
-	ln -s $SCRIPT_PATH/nvim ~/.config/nvim
+	ln -s $INSTALL_PATH/nvim ~/.config/nvim
 }
 
 install_packages() {
@@ -94,6 +99,7 @@ install_plugins() {
 main() {
 	echo "Installing JWHITING's Terminal Setup"
 
+  pull_github
 	install_packages
 	bind_configs
 	install_plugins
