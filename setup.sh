@@ -96,7 +96,7 @@ install_packages() {
   echo "Installing Packages"
 
   sudo apt update -y > /dev/null
-  sudo apt install -y zsh ripgrep fzy > /dev/null
+  sudo apt install -y zsh ripgrep fzy build-essential gcc > /dev/null
 
   # Install ZPlug for ZSH plugins
   curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh | zsh
