@@ -73,7 +73,7 @@ install_nvim() {
 
   wget -qO- https://github.com/neovim/neovim/releases/download/v0.9.2/nvim-linux64.tar.gz | tar xvz -C ~/.nvim > /dev/null
 
-  echo "Failed to install neovim"
+  check_fail "Failed to install neovim"
 
   mv ~/.nvim/nvim-linux64/* ~/.nvim
   rm ~/.nvim/nvim-linux64 -r
