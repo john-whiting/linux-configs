@@ -4,7 +4,7 @@
 # Helper Functions
 ##
 
-INSTALL_PATH=${INSTALL_PATH:~/.jwhiting}
+INSTALL_PATH=${INSTALL_PATH:=~/.jwhiting}
 
 bind_config() {
 	FROM_PATH=$1
