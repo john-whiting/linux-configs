@@ -59,6 +59,7 @@ pull_github() {
 }
 
 install_nvim() {
+  echo "Installing neovim"
 	# Remove the configurations/state files
 	rm ~/.config/nvim -r &> /dev/null
 	rm ~/.local/share/nvim &> /dev/null
@@ -70,13 +71,16 @@ install_nvim() {
 	# Install neovim
 	mkdir -p ~/.nvim
 
-	wget -qO- https://github.com/neovim/neovim/releases/download/v0.9.2/nvim-linux64.tar.gz | tar xvz -C ~/.nvim &> /dev/null
+	wget -qO- https://github.com/neovim/neovim/releases/download/v0.9.2/nvim-linux64.tar.gz | tar xvz -C ~/.nvim > /dev/null
+
+  echo "Failed to install neovim"
 
 	mv ~/.nvim/nvim-linux64/* ~/.nvim
 	rm ~/.nvim/nvim-linux64 -r
 
 	# Bind nvim config
 	ln -s $INSTALL_PATH/nvim ~/.config/nvim
+  echo "Finished installing neovim"
 }
 
 install_packages() {
@@ -90,8 +94,8 @@ install_packages() {
 	##
 	echo "Installing Packages"
 
-	sudo apt update -y
-	sudo apt install -y zsh ripgrep fzy
+	sudo apt update -y > /dev/null
+	sudo apt install -y zsh ripgrep fzy > /dev/null
 
 	install_nvim
 
@@ -111,8 +115,11 @@ bind_configs() {
 }
 
 install_plugins() {
+    echo "Installing plugins"
     # Install NeoVim Plugins
-    ~/.nvim/bin/nvim --headless "+Lazy! sync" +qa
+    ~/.nvim/bin/nvim --headless "+Lazy! sync" +qa > /dev/null
+    check_fail "Failed to install Neovim plugins."
+    echo "Finished installing plugins"
 }
 
 ##
