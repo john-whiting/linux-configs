@@ -20,33 +20,57 @@ bind_config() {
 	ln -s $TO_PATH $FROM_PATH
 }
 
+check_fail() {
+  if [ $? -ne 0 ]; then
+    echo $1
+    exit 1
+  fi
+}
+
 ##
 # Primary Logic
 ##
 
 pull_github() {
-  git clone git@github.com:john-whiting/linux-configs.git $INSTALL_PATH
+  if [ ! -d $INSTALL_PATH/.git ]; then
+    echo "Cloning repository"
+    git clone git@github.com:john-whiting/linux-configs.git $INSTALL_PATH &> /dev/null
 
-  if [ $RESULT -ne 0 ]; then
-    git clone https://github.com/john-whiting/linux-configs.git $INSTALL_PATH
+    if [ $? -ne 0 ]; then
+      git clone https://github.com/john-whiting/linux-configs.git $INSTALL_PATH &> /dev/null
+    fi
+
+    check_fail "Failed to pull repository"
+
+    cd $INSTALL_PATH
+
+    echo "Finished cloning repository"
+  else
+    echo "Updating existing repository"
+
+    cd $INSTALL_PATH
+
+    git pull
+
+    check_fail "Failed to update repository"
+
+    echo "Finished updating existing repository"
   fi
-
-  cd $INSTALL_PATH
 }
 
 install_nvim() {
 	# Remove the configurations/state files
-	rm ~/.config/nvim -r
-	rm ~/.local/share/nvim
-	rm ~/.local/state/nvim
+	rm ~/.config/nvim -r &> /dev/null
+	rm ~/.local/share/nvim &> /dev/null
+	rm ~/.local/state/nvim &> /dev/null
 
 	# Remove the installation
-	rm ~/.nvim -r
+	rm ~/.nvim -r &> /dev/null
 
 	# Install neovim
 	mkdir -p ~/.nvim
 
-	wget -qO- https://github.com/neovim/neovim/releases/download/v0.9.2/nvim-linux64.tar.gz | tar xvz -C ~/.nvim
+	wget -qO- https://github.com/neovim/neovim/releases/download/v0.9.2/nvim-linux64.tar.gz | tar xvz -C ~/.nvim &> /dev/null
 
 	mv ~/.nvim/nvim-linux64/* ~/.nvim
 	rm ~/.nvim/nvim-linux64 -r
@@ -90,7 +114,6 @@ install_plugins() {
     # Install NeoVim Plugins
     ~/.nvim/bin/nvim --headless "+Lazy! sync" +qa
 }
-
 
 ##
 # Main
