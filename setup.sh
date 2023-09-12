@@ -79,6 +79,7 @@ install_nvim() {
 	rm ~/.nvim/nvim-linux64 -r
 
 	# Bind nvim config
+  mkdir -p ~/.config
 	ln -s $INSTALL_PATH/nvim ~/.config/nvim
   echo "Finished installing neovim"
 }
