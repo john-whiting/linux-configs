@@ -64,5 +64,10 @@ local plugins = {
     }
   },
   { 'esensar/nvim-dev-container' },
+  {
+    'numToStr/Comment.nvim',
+    opts = {},
+    lazy = false,
+  }
 }
 require("lazy").setup(plugins)
