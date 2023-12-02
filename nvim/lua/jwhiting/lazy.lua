@@ -56,6 +56,7 @@ local plugins = {
       { 'neovim/nvim-lspconfig' },             -- Required
       { 'williamboman/mason.nvim' },           -- Optional
       { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+      { 'simrat39/rust-tools.nvim' }, -- Optional
 
       -- Autocompletion
       { 'hrsh7th/nvim-cmp' },     -- Required
@@ -68,6 +69,7 @@ local plugins = {
     'numToStr/Comment.nvim',
     opts = {},
     lazy = false,
-  }
+  },
+  { 'mfussenegger/nvim-dap' }
 }
 require("lazy").setup(plugins)

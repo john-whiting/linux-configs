@@ -2,7 +2,7 @@ local lsp = require('lsp-zero').preset({})
 
 local lspconfig = require("lspconfig")
 
-lsp.on_attach(function(_client, bufnr)
+lsp.on_attach(function(client, bufnr)
   local opts = { buffer = bufnr, remap = false }
   -- see :help lsp-zero-keybindings
   -- to learn the available actions
@@ -18,6 +18,12 @@ lsp.on_attach(function(_client, bufnr)
   vim.keymap.set("n", "<leader>vrr", function () vim.lsp.buf.references() end, opts)
   vim.keymap.set("n", "<leader>vrn", function () vim.lsp.buf.rename() end, opts)
   vim.keymap.set("n", "<C-h>", function () vim.lsp.buf.signature_help() end, opts)
+
+  if client.name == "rust_analyzer" then
+    vim.keymap.set("n", "K", "<cmd>RustHoverActions<cr>", opts)
+    vim.keymap.set("n", "<leader>vcr", "<cmd>RustCodeAction<cr>", opts)
+    vim.keymap.set("n", "<leader>vdr", "<cmd>RustDebuggables<cr>", opts)
+  end
 end)
 
 require("mason").setup()
@@ -44,7 +50,9 @@ require("mason-lspconfig").setup_handlers {
   end,
 
   ["rust_analyzer"] = function ()
-    require("rust-tools").setup {}
+    require("rust-tools").setup {
+      
+    }
   end,
 
   -- (Optional) Configure lua language server for neovim
