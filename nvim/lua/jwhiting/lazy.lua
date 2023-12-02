@@ -56,6 +56,7 @@ local plugins = {
       { 'neovim/nvim-lspconfig' },             -- Required
       { 'williamboman/mason.nvim' },           -- Optional
       { 'williamboman/mason-lspconfig.nvim' }, -- Optional
+      { 'rust-lang/rust.vim' }, -- Optional
       { 'simrat39/rust-tools.nvim' }, -- Optional
 
       -- Autocompletion

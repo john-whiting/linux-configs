@@ -50,8 +50,18 @@ require("mason-lspconfig").setup_handlers {
   end,
 
   ["rust_analyzer"] = function ()
+    vim.g.rustfmt_autosave = 1
     require("rust-tools").setup {
-      
+      server = {
+        settings = {
+          ["rust-analyzer"] = {
+            ["checkOnSave"] = {
+              ["enabled"] = true,
+              ["command"] = "clippy",
+            },
+          },
+        }
+      }
     }
   end,
 
