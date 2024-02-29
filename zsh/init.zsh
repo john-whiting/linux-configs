@@ -12,6 +12,8 @@ source ${JWHITING_ZSH_DIR}/keybinds.zsh
 source ${JWHITING_ZSH_DIR}/theme.zsh
 source ${JWHITING_ZSH_DIR}/aliases/init.zsh
 
+source ${JWHITING_ZSH_DIR}/zoxide.zsh
+
 if [ -d "${JWHITING_LOCAL_DIR}/zsh" ]; then
 	for f in ${JWHITING_LOCAL_DIR}/zsh/*.zsh; do
   		. $f
