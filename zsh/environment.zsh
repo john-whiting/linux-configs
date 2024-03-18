@@ -1,3 +1,6 @@
+# Add XDG-compliant bin path
+export PATH=~/.local/bin:${PATH}
+
 # Add poetry to PATH
 export PATH=~/.local/share/pypoetry/venv/bin/:${PATH}
 
