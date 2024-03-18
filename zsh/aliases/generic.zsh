@@ -10,6 +10,5 @@ alias eth0_ip="ip addr show eth0 | grep \"inet\\b\" | awk '{print \$2}' | cut -d
 # Open the PWD inside of Windows Explorer
 openinwin() {
   DIRECTORY=${$(pwd)//\//\\\\}
-  echo  "\\\\wsl.localhost\$WSL_DISTRO_NAME$(echo $DIRECTORY)"
   explorer.exe "\\\\wsl.localhost\\${WSL_DISTRO_NAME}$(echo $DIRECTORY)"
 }
